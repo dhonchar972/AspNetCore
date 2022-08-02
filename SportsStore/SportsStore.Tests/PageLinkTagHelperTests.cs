@@ -23,23 +23,25 @@ namespace SportsStore.Tests
                 .Returns("Test/Page3");
 
             var urlHelperFactory = new Mock<IUrlHelperFactory>();
-            urlHelperFactory.Setup(f => f.GetUrlHelper(It.IsAny<ActionContext>())).Returns(urlHelper.Object);
+            urlHelperFactory.Setup(f =>
+                    f.GetUrlHelper(It.IsAny<ActionContext>()))
+                        .Returns(urlHelper.Object);
 
-            PageLinkTagHelper helper = new PageLinkTagHelper(urlHelperFactory.Object)
-            {
-                PageModel = new PagingInfo
-                {
-                    CurrentPage = 2,
-                    TotalItems = 28,
-                    ItemsPerPage = 10
-                },
-                PageAction = "Test"
-            };
+            PageLinkTagHelper helper =
+                    new PageLinkTagHelper(urlHelperFactory.Object)
+                    {
+                        PageModel = new PagingInfo
+                        {
+                            CurrentPage = 2,
+                            TotalItems = 28,
+                            ItemsPerPage = 10
+                        },
+                        PageAction = "Test"
+                    };
 
             TagHelperContext ctx = new TagHelperContext(
                 new TagHelperAttributeList(),
-                new Dictionary<object, object>(),
-                "");
+                new Dictionary<object, object>(), "");
 
             var content = new Mock<TagHelperContent>();
             TagHelperOutput output = new TagHelperOutput("div",
