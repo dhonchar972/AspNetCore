@@ -1,3 +1,5 @@
 add in nuget "Microsoft.EntityFrameworkCore.Tools" for migrations
 in nuget console run "Add-Migration Initial"
 "Update-Database"
+Add-Migration Initial -Context AppidentityDbContext
+Update-Database -Context AppidentityDbContext
