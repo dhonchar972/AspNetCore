@@ -1,0 +1,3 @@
+add in nuget "Microsoft.EntityFrameworkCore.Tools" for migrations
+in nuget console run "Add-Migration Initial"
+"Update-Database"
