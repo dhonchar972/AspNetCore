@@ -3,3 +3,30 @@ in nuget console run "Add-Migration Initial"
 "Update-Database"
 Add-Migration Initial -Context AppidentityDbContext
 Update-Database -Context AppidentityDbContext
+
+private IModelStorage storage;
+public MemoryRepository(IМodelStorage modelStore) {
+	storage = modelStore;
+}
+
+public void CoпfigureServices(IServiceCollection services) {
+	services.AddTransient<IModelStorage, DictionaryStorage>(); //DI, add to Startup
+}
+
+//services.AddSingleton<IRepository, МemoryRepository>();
+//services.AddScoped<IRepository, MemoryRepository>();
+
+Фильтры(19) - аспекты(сквозной функционал)
+
+[RequireHttps] //один из типичных фильтров
+public ViewResult Index() => View("Мessage", "This");
+//реализуют интерфейс IFilterMetadata
+Фильтры авторизации - IAuthorizationFilter, IAsyncAuthor1zationFilter
+Фильтры действий - IActionFilter, IAsyncActionFilter
+Фильтры результатов - IResultFilter, IAsyncResultFilter
+Фильтры исключений - IExceptionFilter, IAsyncExceptionFilter
+
+//ASP.NET Core Identity - стандартные средства администрирования
+//Active Directory
+
+//дескрипторы(23) - asp-action=""

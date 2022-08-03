@@ -1,0 +1,30 @@
+dotnet new console --framework net6.0  //Create new console application
+
+Standart contents: Program.cs AND "FolderName".csproj
+
+The "obj" folder is used to store temporary object files and other files used in order to create the final binary during the compilation process.
+
+The "bin" folder is the output folder for complete binaries (assemblies).
+
+Default "FolderName".csproj contains:
+
+    <Project Sdk="Microsoft.NET.Sdk">
+
+        <PropertyGroup>
+    	    <OutputType>Exe</OutputType>
+    	    <TargetFramework>net6.0</TargetFramework>
+    	    <ImplicitUsings>enable</ImplicitUsings>
+    	    <Nullable>enable</Nullable>
+  	</PropertyGroup>
+
+    </Project>
+
+All info hear: https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props
+
+dotnet new sln -n mysolution
+dotnet new console -o myapp
+dotnet new classlib -o mylib1
+dotnet new classlib -o mylib2
+dotnet sln mysolution.sln add myapp\myapp.csproj
+dotnet sln mysolution.sln add mylib1\mylib1.csproj --solution-folder mylibs
+dotnet sln mysolution.sln add mylib2\mylib2.csproj --solution-folder mylibs
