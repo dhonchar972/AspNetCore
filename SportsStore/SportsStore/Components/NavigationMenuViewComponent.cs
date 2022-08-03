@@ -2,24 +2,23 @@
 using SportsStore.Models;
 using System.Linq;
 
-namespace SportsStore.Components
+namespace SportsStore.Components;
+
+public class NavigationMenuViewComponent : ViewComponent
 {
-    public class NavigationMenuViewComponent : ViewComponent
+    private readonly IProductRepository repository;
+
+    public NavigationMenuViewComponent(IProductRepository repository)
     {
-        private IProductRepository repository;
+        this.repository = repository;
+    }
 
-        public NavigationMenuViewComponent(IProductRepository repo)
-        {
-            repository = repo;
-        }
-
-        public IViewComponentResult Invoke()
-        {
-            ViewBag.SelectedCategory = RouteData?.Values["category"];
-            return View(repository.Products
-                .Select(x => x.Category)
-                .Distinct()
-                .OrderBy(x => x));
-        }
+    public IViewComponentResult Invoke()
+    {
+        ViewBag.SelectedCategory = RouteData?.Values["category"];
+        return View(repository.Products
+            .Select(x => x.Category)
+            .Distinct()
+            .OrderBy(x => x));
     }
 }

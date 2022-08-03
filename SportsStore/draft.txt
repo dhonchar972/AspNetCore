@@ -30,3 +30,6 @@ public ViewResult Index() => View("Мessage", "This");
 //Active Directory
 
 //дескрипторы(23) - asp-action=""
+
+Add-Migration Update -Context ApplicationDbContext
+Update-Database -Context ApplicationDbContext

@@ -3,36 +3,39 @@ using SportsStore.Models;
 using SportsStore.Models.ViewModels;
 using System.Linq;
 
-namespace SportsStore.Controllers
+namespace SportsStore.Controllers;
+
+public class ProductController : Controller
 {
-    public class ProductController : Controller
+    private readonly IProductRepository repository;
+    public int PageSize = 4;
+
+    public ProductController(IProductRepository repository)
     {
-        private IProductRepository repository;
-        public int PageSize = 4;
+        this.repository = repository;
+    }
 
-        public ProductController(IProductRepository repo)
+    public ViewResult List(string category, int productPage = 1)
+    {
+        return View(new ProductsListViewModel
         {
-            repository = repo;
-        }
+            Products = repository.Products
+                .Where(p => category == null || p.Category == category)
+                .OrderBy(p => p.ProductID)
+                .Skip((productPage - 1) * PageSize)
+                .Take(PageSize),
 
-        public ViewResult List(string category, int productPage = 1)
-            => View(new ProductsListViewModel
+            PagingInfo = new PagingInfo
             {
-                Products = repository.Products
-                    .Where(p => category == null || p.Category == category)
-                    .OrderBy(p => p.ProductID)
-                    .Skip((productPage - 1) * PageSize)
-                    .Take(PageSize),
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = productPage,
-                    ItemsPerPage = PageSize,
-                    TotalItems = category == null ?
-                        repository.Products.Count() :
-                        repository.Products.Where(e =>
-                            e.Category == category).Count()
-                },
-                CurrentCategory = category
-            });
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItems = category == null ?
+                    repository.Products.Count() :
+                    repository.Products.Where(e =>
+                        e.Category == category).Count()
+            },
+
+            CurrentCategory = category
+        });
     }
 }

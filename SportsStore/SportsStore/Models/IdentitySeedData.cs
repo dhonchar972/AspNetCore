@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
-namespace SportsStore.Models
+namespace SportsStore.Models;
+
+public static class IdentitySeedData
 {
-    public static class IdentitySeedData
+    private const string adminUser = "Admin";
+    private const string adminPassword = "Secret123$";
+
+    public static async Task EnsurePopulated(UserManager<IdentityUser> userManager)
     {
-        private const string adminUser = "Admin";
-        private const string adminPassword = "Secret123$";
-
-        public static async Task EnsurePopulated(UserManager<IdentityUser> userManager)
+        IdentityUser user = await userManager.FindByIdAsync(adminUser);
+        if (user == null)
         {
-
-            IdentityUser user = await userManager.FindByIdAsync(adminUser);
-            if (user == null)
-            {
-                user = new IdentityUser("Admin");
-                await userManager.CreateAsync(user, adminPassword);
-            }
+            user = new IdentityUser("Admin");
+            await userManager.CreateAsync(user, adminPassword);
         }
     }
 }

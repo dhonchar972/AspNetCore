@@ -1,49 +1,46 @@
 ﻿using System.Linq;
 
-namespace SportsStore.Models
+namespace SportsStore.Models;
+
+public class EFProductRepository : IProductRepository
 {
-    public class EFProductRepository : IProductRepository
+    private readonly ApplicationDbContext context;
+
+    public EFProductRepository(ApplicationDbContext context)
     {
-        private ApplicationDbContext context;
+        this.context = context;
+    }
 
-        public EFProductRepository(ApplicationDbContext ctx)
+    public IQueryable<Product> Products => context.Products;
+
+    public void SaveProduct(Product product)
+    {
+        if (product.ProductID == 0)
         {
-            context = ctx;
+            context.Products.Add(product);
         }
-
-        public IQueryable<Product> Products => context.Products;
-
-        public void SaveProduct(Product product)
+        else
         {
-            if (product.ProductID == 0)
-            {
-                context.Products.Add(product);
-            }
-            else
-            {
-                Product dbEntry = context.Products
-                    .FirstOrDefault(p => p.ProductID == product.ProductID);
-                if (dbEntry != null)
-                {
-                    dbEntry.Name = product.Name;
-                    dbEntry.Description = product.Description;
-                    dbEntry.Price = product.Price;
-                    dbEntry.Category = product.Category;
-                }
-            }
-            context.SaveChanges();
-        }
-
-        public Product DeleteProduct(int productID)
-        {
-            Product dbEntry = context.Products
-                .FirstOrDefault(p => p.ProductID == productID);
+            Product dbEntry = context.Products.FirstOrDefault(p => p.ProductID == product.ProductID);
             if (dbEntry != null)
             {
-                context.Products.Remove(dbEntry);
-                context.SaveChanges();
+                dbEntry.Name = product.Name;
+                dbEntry.Description = product.Description;
+                dbEntry.Price = product.Price;
+                dbEntry.Category = product.Category;
             }
-            return dbEntry;
         }
+        context.SaveChanges();
+    }
+
+    public Product DeleteProduct(int productID)
+    {
+        Product dbEntry = context.Products.FirstOrDefault(p => p.ProductID == productID);
+        if (dbEntry != null)
+        {
+            context.Products.Remove(dbEntry);
+            context.SaveChanges();
+        }
+        return dbEntry;
     }
 }

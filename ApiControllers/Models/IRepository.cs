@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace ApiControllers.Models
+namespace ApiControllers.Models;
+
+public interface IRepository
 {
-    public interface IRepository
-    {
-        IEnumerable<Reservation> Reservations { get; }
-        Reservation this[int id] { get; }
-        Reservation AddReservation(Reservation reservation);
-        Reservation UpdateReservation(Reservation reservation);
-        void DeleteReservation(int id);
-    }
+    IEnumerable<Reservation> Reservations { get; }
+    Reservation this[int id] { get; }
+    Reservation AddReservation(Reservation reservation);
+    Reservation UpdateReservation(Reservation reservation);
+    void DeleteReservation(int id);
 }
