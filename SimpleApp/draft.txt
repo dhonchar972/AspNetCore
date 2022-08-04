@@ -1,0 +1,16 @@
+Scaffold-DbContext "connection_string" db_provider  //- Database First method
+example:
+	Scaffold-DbContext 
+	"Server=(localdb)\\MSSQLLocalDB;Database=SimpleApp;Trusted_Connection=True;MultipleActiveResultSets=true" 
+	Microsoft.EntityFrameworkCore.SqlServer
+
+GET BASE FOLDER: AppDomain.CurrentDomain.BaseDirectory.Split(@"bin\")[0]
+
+Add-Migration Init (need Microsoft.EntityFrameworkCore.Tools)
+Update-Database
+Script-Migration [optional name]
+Bundle-Migration
+
+mysql - Pomelo.EntityFrameworkCore.MySql - "server=localhost;user=root;password=1111;database=usersdb"
+psql - Npgsql.EntityFrameworkCore.PostgreSQL - "Host=localhost;Port=5432;Database=usersdb;Username=postgres;Password=1111"
+

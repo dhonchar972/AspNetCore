@@ -11,7 +11,7 @@ public class EFProductRepository : IProductRepository
         this.context = context;
     }
 
-    public IQueryable<Product> Products => context.Products;
+    public IQueryable<Product> Products { get { return context.Products; } }
 
     public void SaveProduct(Product product)
     {

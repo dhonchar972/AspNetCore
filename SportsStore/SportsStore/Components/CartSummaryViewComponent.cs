@@ -7,9 +7,9 @@ public class CartSummaryViewComponent : ViewComponent
 {
     private readonly Cart cart;
 
-    public CartSummaryViewComponent(Cart cartService)
+    public CartSummaryViewComponent(Cart cart)
     {
-        cart = cartService;
+        this.cart = cart;
     }
 
     public IViewComponentResult Invoke()

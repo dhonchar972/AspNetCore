@@ -27,15 +27,22 @@ public class Cart
         }
     }
 
-    public virtual void RemoveLine(Product product) =>
+    public virtual void RemoveLine(Product product)
+    {
         lineCollection.RemoveAll(l => l.Product.ProductID == product.ProductID);
+    }
 
-    public virtual decimal ComputeTotalValue() =>
-        lineCollection.Sum(e => e.Product.Price * e.Quantity);
+    public virtual decimal ComputeTotalValue()
+    {
+        return lineCollection.Sum(e => e.Product.Price * e.Quantity);
+    }
 
-    public virtual void Clear() => lineCollection.Clear();
+    public virtual void Clear()
+    {
+        lineCollection.Clear();
+    }
 
-    public virtual IEnumerable<CartLine> Lines => lineCollection;
+    public virtual IEnumerable<CartLine> Lines { get { return lineCollection; } }
 }
 
 public class CartLine
